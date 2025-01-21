@@ -3,6 +3,7 @@ import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   const { data, loading, error } = useFetch("/hotels?featured=true&limit=4");
+  console.log(data); // Add this to inspect the data returned by the API
 
   return (
     <div className="fp">
@@ -13,8 +14,8 @@ const FeaturedProperties = () => {
           {data.map((item) => (
             <div className="fpItem" key={item._id}>
               <img
-                src={item.photos[0]}
-                alt=""
+                src={Array.isArray(item.photos) && item.photos.length > 0 ? item.photos[0] : "https://via.placeholder.com/150"} // Check if photos is a valid array
+                alt={item.name}
                 className="fpImg"
               />
               <span className="fpName">{item.name}</span>
